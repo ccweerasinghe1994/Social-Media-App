@@ -1,31 +1,47 @@
 // only for dev env
 import devBundle from "./devBundle";
-import Template from "./../template";
-import express from "express";
-import path from "path";
-import { info } from "console";
-import { MongoClient } from "mongodb";
+// import Template from "./../template";
+// import path from "path";
+// import { MongoClient } from "mongodb";
+import config from "../config/config";
 const CURRENT_WORKING_DIRECTORY = process.cwd();
-const app = express();
+import mongoose from "mongoose";
 
+import app from "./express";
 // only for dev env
-devBundle.compile(app);
+// devBundle.compile(app);
 
-app.use("/dist", express.static(path.join(CURRENT_WORKING_DIRECTORY, "dist")));
+// app.use("/dist", express.static(path.join(CURRENT_WORKING_DIRECTORY, "dist")));
 
-app.get("/", (req, res) => {
-  res.status(200).send(Template());
+// app.get("/", (req, res) => {
+//   res.status(200).send(Template());
+// });
+
+app.listen(config.port, (error) => {
+  if (error) {
+    console.log(error);
+  }
+  console.info("server started on port %s", config.port);
 });
 
-let port = process.env.PORT || 3000;
-
-app.listen(port, function onstart(error) {
-  info("server started on port %s", port);
+mongoose.Promise = global.Promise;
+mongoose.connect(config.mongoUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  autoIndex: true,
 });
 
-const url =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/mernSimpleSetup";
-MongoClient.connect(url, (err, db) => {
-  console.log("Connected successfully to mongodb server");
-  db.close();
+// mongoose.connection.on("error", () => {
+//   throw new Error(`unable to connect to the database ${config.mongoUri}`);
+// });
+
+mongoose.connection.on("error", () => {
+  throw new Error(`unable to connect to database: ${config.mongoUri}`);
 });
+
+// const url =
+//   process.env.MONGODB_URI || "mongodb://localhost:27017/mernSimpleSetup";
+// MongoClient.connect(url, (err, db) => {
+//   console.log("Connected successfully to mongodb server");
+//   db.close();
+// });
