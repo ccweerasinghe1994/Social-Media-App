@@ -1,5 +1,6 @@
 import express from "express";
-import userController from "../controller/user.controller";
+import userController from "../controllers/user.controller";
+import authController from "../controllers/auth.controller";
 
 const router = express.Router();
 
@@ -7,10 +8,18 @@ router.route("/api/users").get(userController.list).post(userController.create);
 
 router
   .route("/api/users/:userId")
-  .get(userController.read)
-  .put(userController.update)
-  .delete(userController.remove);
+  .get(authController.requireSignIn, userController.read)
+  .put(
+    authController.requireSignIn,
+    authController.hasAuthorization,
+    userController.update
+  )
+  .delete(
+    authController.requireSignIn,
+    authController.hasAuthorization,
+    userController.remove
+  );
 
-router.param("userId", userCtrl.userById);
+router.param("userId", userController.userById);
 
 export default router;
