@@ -8,10 +8,9 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "development": "nodemon",
+    "dev": "nodemon",
     "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
-    "start": "NODE_ENV=production node ./dist/server.generated.js",
-    "doc":"jsdoc -c jsdoc.json"
+    "start": "NODE_ENV=production node ./dist/server.generated.js"
   },
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.1",

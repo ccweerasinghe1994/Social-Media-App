@@ -3,6 +3,13 @@ import jwt from "jsonwebtoken";
 import expressJwt from "express-jwt";
 import config from "../../config/config";
 
+/**
+ * SignIn the User
+ *
+ * @param {object} req - request object
+ * @param {object} res - response object
+ * @returns {object}
+ */
 const signIN = async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });
@@ -53,7 +60,7 @@ const requireSignIn = expressJwt({
 
 /**
  *
- * @param {object} req -request object
+ * @param {object} req -request object 
  * @param {object} res - response object
  * @param {function} next 	-this will execute the next function
  * @returns object | function

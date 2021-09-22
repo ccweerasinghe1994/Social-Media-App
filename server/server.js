@@ -1,3 +1,6 @@
+/**
+ * @global
+ */
 // only for dev env
 import devBundle from "./devBundle";
 // import Template from "./../template";
@@ -30,7 +33,6 @@ mongoose.connect(config.mongoUri, {
   useUnifiedTopology: true,
   autoIndex: true,
 });
-
 
 mongoose.connection.on("error", () => {
   throw new Error(`unable to connect to database: ${config.mongoUri}`);
