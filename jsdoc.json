@@ -1,7 +1,8 @@
 {
     "source": {
         "include": [
-            "server"
+            "server",
+            "client"
         ],
         "includePattern": ".js$",
         "excludePattern": "(node_modules/docs)"
