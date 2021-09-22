@@ -1,7 +1,6 @@
 {
     "source": {
         "include": [
-            "server",
             "client"
         ],
         "includePattern": ".js$",
